@@ -6,8 +6,8 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity('restaurants-settings')
-export class RestaurantsSettingsEntity {
+@Entity('restaurant-settings')
+export class RestaurantSettingsEntity {
   @PrimaryGeneratedColumn()
   id: string;
 

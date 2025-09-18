@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CompanyModule } from './company/company.module';
 import { RestaurantsModule } from './restaurants/restaurants.module';
-import { RestaurantsSettingsModule } from './restaurants_settings/restaurants_settings.module';
+import { RestaurantSettingsModule } from './restaurant_settings/restaurant_settings.module';
 import { UsersModule } from './users/users.module';
 import { RolesModule } from './roles/roles.module';
 import { MenuModule } from './menu/menu.module';
@@ -33,7 +33,7 @@ import { ReviewsModule } from './reviews/reviews.module';
     }),
     CompanyModule,
     RestaurantsModule,
-    RestaurantsSettingsModule,
+    RestaurantSettingsModule,
     UsersModule,
     RolesModule,
     MenuModule,

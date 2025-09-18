@@ -1,20 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { RestaurantsSettingsEntity } from './entities/restaurants_settings.entity';
+import { RestaurantSettingsEntity } from './entities/restaurant_settings.entity';
 
 @Injectable()
-export class RestaurantsSettingsService {
+export class RestaurantSettingsService {
   constructor(
-    @InjectRepository(RestaurantsSettingsEntity)
-    private restaurantRepo: Repository<RestaurantsSettingsEntity>,
+    @InjectRepository(RestaurantSettingsEntity)
+    private restaurantRepo: Repository<RestaurantSettingsEntity>,
   ) {}
 
   findAll() {
     return this.restaurantRepo.find();
   }
 
-  create(data: Partial<RestaurantsSettingsEntity>) {
+  create(data: Partial<RestaurantSettingsEntity>) {
     const restaurant = this.restaurantRepo.create(data);
     return this.restaurantRepo.save(restaurant);
   }

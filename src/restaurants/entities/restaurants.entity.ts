@@ -5,7 +5,6 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
-
 @Entity('restaurants')
 export class RestaurantsEntity {
   @PrimaryGeneratedColumn()
