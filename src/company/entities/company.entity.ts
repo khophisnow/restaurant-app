@@ -4,12 +4,14 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
+import { RestaurantsEntity } from '../../restaurants/entities/restaurants.entity';
 
-@Entity('companies')
+@Entity('company')
 export class CompanyEntity {
   @PrimaryGeneratedColumn()
-  id: string;
+  id: number;
 
   @Column()
   name: string;
@@ -25,6 +27,10 @@ export class CompanyEntity {
 
   @Column()
   logoUrl: string;
+
+  // Relations
+  @OneToMany(() => RestaurantsEntity, (restaurant) => restaurant.company)
+  restaurants: RestaurantsEntity[];
 
   @CreateDateColumn()
   created_at: Date;

@@ -2,23 +2,31 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
+  ManyToOne,
+  JoinColumn,
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { OrdersEntity } from '../../orders/entities/orders.entity';
+import { MenuEntity } from '../../menu/entities/menu.entity';
 
 @Entity('order_items')
 export class OrderItemsEntity {
   @PrimaryGeneratedColumn()
-  id: string;
+  id: number;
 
-  @Column()
-  order_id: string;
+  @ManyToOne(() => OrdersEntity, (order) => order.id, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'order_id' })
+  order: OrdersEntity;
 
-  @Column()
-  item_id: string;
+  @ManyToOne(() => MenuEntity, (menu) => menu.id, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'item_id' })
+  item: MenuEntity;
 
-  @Column()
-  quantity: string;
+  @Column({ type: 'int' })
+  quantity: number;
 
   @CreateDateColumn()
   created_at: Date;

@@ -2,39 +2,39 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
+  ManyToOne,
+  JoinColumn,
   CreateDateColumn,
-  UpdateDateColumn,
 } from 'typeorm';
+import { RestaurantsEntity } from '../../restaurants/entities/restaurants.entity';
+import { UsersEntity } from '../../users/entities/users.entity';
+import { OrdersEntity } from '../../orders/entities/orders.entity';
 
 @Entity('reviews')
 export class ReviewsEntity {
   @PrimaryGeneratedColumn()
-  id: string;
+  id: number;
 
-  @Column()
-  restaurant_id: string;
+  @ManyToOne(() => RestaurantsEntity, (restaurant) => restaurant.id, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'restaurant_id' })
+  restaurant: RestaurantsEntity;
 
-  @Column()
-  full_name: string;
+  @ManyToOne(() => UsersEntity, (user) => user.id, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'user_id' })
+  user: UsersEntity;
 
-  @Column()
-  username: string;
+  @ManyToOne(() => OrdersEntity, (order) => order.id, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'order_id' })
+  order: OrdersEntity;
 
-  @Column()
-  phone: string;
+  @Column({ type: 'int' })
+  rating: number; // 1–5
 
-  @Column({ unique: true })
-  email: string;
-
-  @Column()
-  hashed_password: string;
-
-  @Column()
-  role_id: string;
+  @Column({ type: 'text', nullable: true })
+  comment: string;
 
   @CreateDateColumn()
   created_at: Date;
-
-  @UpdateDateColumn()
-  updated_at: Date;
 }

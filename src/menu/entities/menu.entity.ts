@@ -2,33 +2,45 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  CreateDateColumn,
-  UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
+import { RestaurantsEntity } from '../../restaurants/entities/restaurants.entity';
+import { CategoriesEntity } from '../../categories/entities/categories.entity';
 
 @Entity('menu')
 export class MenuEntity {
   @PrimaryGeneratedColumn()
-  id: string;
+  id: number;
 
-  @Column()
-  restaurant_id: string;
+  @ManyToOne(() => RestaurantsEntity, (restaurants) => restaurants.id, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'restaurant_id' })
+  restaurant: RestaurantsEntity;
 
-  @Column()
+  @Column({ type: 'varchar' })
   item_name: string;
 
-  @Column()
-  price: string;
+  @Column({ type: 'decimal', precision: 10, scale: 2 })
+  price: number;
 
-  @Column()
+  @Column({ type: 'text', nullable: true })
   description: string;
 
-  @Column()
-  category_id: string;
+  @ManyToOne(() => CategoriesEntity, (category) => category.id, {
+    onDelete: 'SET NULL',
+  })
+  @JoinColumn({ name: 'category_id' })
+  category: CategoriesEntity;
 
-  @CreateDateColumn()
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   created_at: Date;
 
-  @UpdateDateColumn()
+  @Column({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP',
+  })
   updated_at: Date;
 }

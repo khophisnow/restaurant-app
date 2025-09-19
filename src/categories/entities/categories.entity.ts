@@ -1,13 +1,23 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import { RestaurantsEntity } from '../../restaurants/entities/restaurants.entity';
 
 @Entity('categories')
 export class CategoriesEntity {
   @PrimaryGeneratedColumn()
-  id: string;
+  id: number;
 
-  @Column()
-  restaurant_id: string;
+  @ManyToOne(() => RestaurantsEntity, (restaurant) => restaurant.id, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'restaurant_id' })
+  restaurant: RestaurantsEntity;
 
-  @Column()
+  @Column({ type: 'varchar' })
   name: string;
 }

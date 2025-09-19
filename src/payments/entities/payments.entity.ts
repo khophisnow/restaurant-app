@@ -2,39 +2,36 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  CreateDateColumn,
-  UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
+import { RestaurantsEntity } from '../../restaurants/entities/restaurants.entity';
+import { OrdersEntity } from '../../orders/entities/orders.entity';
 
 @Entity('payments')
 export class PaymentsEntity {
   @PrimaryGeneratedColumn()
-  id: string;
+  id: number;
 
-  @Column()
-  restaurant_id: string;
+  @ManyToOne(() => RestaurantsEntity, (restaurant) => restaurant.id, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'restaurant_id' })
+  restaurant: RestaurantsEntity;
 
-  @Column()
-  full_name: string;
+  @ManyToOne(() => OrdersEntity, (order) => order.id, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'order_id' })
+  order: OrdersEntity;
 
-  @Column()
-  username: string;
+  @Column('decimal')
+  amount: number;
 
-  @Column()
-  phone: string;
+  @Column({ type: 'varchar' })
+  method: string; // card, cash, mobile_money
 
-  @Column({ unique: true })
-  email: string;
+  @Column({ type: 'varchar' })
+  status: string; // pending, completed, failed
 
-  @Column()
-  hashed_password: string;
-
-  @Column()
-  role_id: string;
-
-  @CreateDateColumn()
-  created_at: Date;
-
-  @UpdateDateColumn()
-  updated_at: Date;
+  @Column({ type: 'timestamp' })
+  transaction_date: Date;
 }

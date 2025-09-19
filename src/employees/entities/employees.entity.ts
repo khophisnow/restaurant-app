@@ -2,38 +2,36 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  CreateDateColumn,
+  ManyToOne,
+  JoinColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { RestaurantsEntity } from '../../restaurants/entities/restaurants.entity';
+import { UsersEntity } from '../../users/entities/users.entity';
 
 @Entity('employees')
 export class EmployeesEntity {
   @PrimaryGeneratedColumn()
-  id: string;
+  id: number;
 
-  @Column()
-  restaurant_id: string;
+  @ManyToOne(() => RestaurantsEntity, (restaurant) => restaurant.id, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'restaurant_id' })
+  restaurant: RestaurantsEntity;
 
-  @Column()
-  full_name: string;
+  @ManyToOne(() => UsersEntity, (user) => user.id, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'user_id' })
+  user: UsersEntity;
 
-  @Column()
-  username: string;
+  @Column({ type: 'varchar' })
+  position: string; // driver, cashier, manager
 
-  @Column()
-  phone: string;
+  @Column('decimal')
+  salary: number;
 
-  @Column({ unique: true })
-  email: string;
-
-  @Column()
-  hashed_password: string;
-
-  @Column()
-  role_id: string;
-
-  @CreateDateColumn()
-  created_at: Date;
+  @Column({ type: 'timestamp' })
+  hired_at: Date;
 
   @UpdateDateColumn()
   updated_at: Date;

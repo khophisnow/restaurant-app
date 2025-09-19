@@ -2,37 +2,48 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
+  ManyToOne,
+  JoinColumn,
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { RestaurantsEntity } from '../../restaurants/entities/restaurants.entity';
+import { UsersEntity } from '../../users/entities/users.entity';
 
 @Entity('orders')
 export class OrdersEntity {
   @PrimaryGeneratedColumn()
-  id: string;
+  id: number;
 
-  @Column()
-  restaurant_id: string;
+  @ManyToOne(() => RestaurantsEntity, (restaurant) => restaurant.id, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'restaurant_id' })
+  restaurant: RestaurantsEntity;
 
-  @Column()
-  order_number: string;
+  @Column({ type: 'int' })
+  order_number: number;
 
-  @Column()
-  user_id: string;
+  @ManyToOne(() => UsersEntity, (user) => user.id, { onDelete: 'SET NULL' })
+  @JoinColumn({ name: 'user_id' })
+  user: UsersEntity;
 
-  @Column()
-  price: string;
+  @Column({ type: 'decimal', precision: 10, scale: 2 })
+  price: number;
 
-  @Column()
+  @Column({ type: 'varchar' })
   payment_method: string;
 
-  @Column()
-  order_type: string;
+  @Column({ type: 'varchar' })
+  order_type: string; // pickup or delivery
 
-  @Column()
+  @Column({ type: 'text', nullable: true })
   delivery_location: string;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    default: 'pending',
+  })
   status: string;
 
   @CreateDateColumn()

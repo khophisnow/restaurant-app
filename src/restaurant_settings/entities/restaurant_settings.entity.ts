@@ -4,15 +4,15 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToOne,
+  JoinColumn,
 } from 'typeorm';
+import { RestaurantsEntity } from '../../restaurants/entities/restaurants.entity';
 
-@Entity('restaurant-settings')
+@Entity('restaurant_settings')
 export class RestaurantSettingsEntity {
   @PrimaryGeneratedColumn()
-  id: string;
-
-  @Column()
-  restaurant_id: string;
+  id: number;
 
   @Column()
   theme_color: string;
@@ -20,18 +20,25 @@ export class RestaurantSettingsEntity {
   @Column()
   currency: string;
 
-  @Column()
-  tax_rate: string;
+  @Column('decimal', { precision: 10, scale: 2, default: 0 })
+  tax_rate: number;
 
-  @Column()
-  delivery_fee: string;
+  @Column('decimal', { precision: 10, scale: 2, default: 0 })
+  delivery_fee: number;
 
-  @Column()
-  opening_hours: string;
+  @Column('text', { nullable: true })
+  opening_hours: string; // JSON string
 
   @CreateDateColumn()
   created_at: Date;
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  // 🔗 Relation back to restaurant
+  @OneToOne(() => RestaurantsEntity, (restaurant) => restaurant.settings, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'restaurant_id' }) // foreign key
+  restaurant: RestaurantsEntity;
 }
