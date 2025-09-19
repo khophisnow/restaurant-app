@@ -65,29 +65,35 @@ Main entities:
 ## ⚡ Getting Started
 
 ### 1. Clone the repo
+
 ```bash
 git clone https://github.com/<your-username>/restaurant-api.git
 cd restaurant-api
 ```
 
 ### 2. Install dependencies
+
 ```bash
 npm install
 ```
 
 ### 3. Setup environment
+
 Create `.env` file:
+
 ```env
 DATABASE_URL=postgres://user:password@localhost:5432/restaurantdb
 PORT=3000
 ```
 
 ### 4. Run migrations
+
 ```bash
 npm run typeorm migration:run
 ```
 
 ### 5. Start the server
+
 ```bash
 npm run start:dev
 ```
@@ -112,10 +118,13 @@ npm run start:dev
 ## 🛠️ Development
 
 - Run in watch mode:
+
 ```bash
 npm run start:dev
 ```
+
 - Run tests:
+
 ```bash
 npm run test
 ```
@@ -123,4 +132,5 @@ npm run test
 ---
 
 ## 📜 License
+
 MIT License © 2025 [Your Name]
