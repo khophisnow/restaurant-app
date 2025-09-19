@@ -96,16 +96,16 @@ npm run start:dev
 
 ## 📌 Example Endpoints
 
-| Method | Endpoint                     | Description                  |
-|--------|-------------------------------|------------------------------|
-| POST   | `/auth/register`              | Register a new user          |
-| POST   | `/auth/login`                 | Login and get a token        |
-| GET    | `/restaurants`                | List all restaurants         |
-| GET    | `/restaurants/:id/menu`       | Get menu for a restaurant    |
-| POST   | `/orders`                     | Place an order               |
-| GET    | `/orders/:id`                 | Get order details            |
-| POST   | `/employees/:id/withdrawals`  | Request salary withdrawal    |
-| GET    | `/reviews/:restaurantId`      | Get restaurant reviews       |
+| Method | Endpoint                     | Description               |
+| ------ | ---------------------------- | ------------------------- |
+| POST   | `/auth/register`             | Register a new user       |
+| POST   | `/auth/login`                | Login and get a token     |
+| GET    | `/restaurants`               | List all restaurants      |
+| GET    | `/restaurants/:id/menu`      | Get menu for a restaurant |
+| POST   | `/orders`                    | Place an order            |
+| GET    | `/orders/:id`                | Get order details         |
+| POST   | `/employees/:id/withdrawals` | Request salary withdrawal |
+| GET    | `/reviews/:restaurantId`     | Get restaurant reviews    |
 
 ---
 
