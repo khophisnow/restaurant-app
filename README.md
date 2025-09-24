@@ -1,36 +1,41 @@
+
 # 🍽️ Restaurant Management API
 
-A complete backend system for managing restaurants, menus, orders, deliveries, employees, and payments.  
-Built with **NestJS**, **TypeORM**, and **PostgreSQL**, the API is designed for multi-restaurant operations with support for customers, employees, drivers, and admins.
+A modern backend system for managing restaurants, menus, orders, deliveries, inventory, and users.  
+Built with **NestJS**, **TypeORM**, and **PostgreSQL**, this API is designed to support multiple user types including **admins (owners), chefs, drivers, and customers**.
 
 ---
 
 ## 🚀 Features
 
-- **Multi-Restaurant Support**  
-  - Companies → Restaurants → Restaurant Settings  
 - **User Management**  
-  - Roles (customer, admin, driver, employee)  
+  - Users can be **admin, chef, driver, customer**  
+  - Type-specific tables with extra info (e.g., `chefs`, `drivers`, `customers`)  
   - Authentication & Authorization ready  
+
 - **Menu & Categories**  
-  - Menu items with categories  
+  - Menu items linked to categories  
   - Pricing, descriptions, timestamps  
+
 - **Orders & Order Items**  
-  - Create, update, and track orders  
-  - Order types: pickup, delivery  
-  - Status tracking (pending → confirmed → completed)  
+  - Place, update, and track orders  
+  - Order types: `pickup`, `delivery`  
+  - Status tracking: `pending → confirmed → preparing → out_for_delivery → completed → cancelled`  
+
+- **Prepared Orders**  
+  - Chefs mark items as `not_ready` or `ready`  
+  - Drivers pick up ready orders  
+
+- **Inventory Management**  
+  - Track quantities, units, and reorder levels  
+  - Managed by chefs; admin/owner can monitor stock  
+
 - **Deliveries**  
   - Assign drivers  
-  - Track delivery status  
-- **Payments**  
-  - Multiple methods (card, cash, mobile money)  
-  - Transaction statuses  
-- **Employees & HR**  
-  - Employee profiles, salaries, hiring dates  
-  - Salary withdrawals  
-  - Employee requests (leave, equipment, advance)  
+  - Track delivery status: `assigned`, `in_progress`, `delivered`  
+
 - **Reviews & Ratings**  
-  - Customer feedback per order  
+  - Customers leave feedback per order  
 
 ---
 
@@ -47,16 +52,19 @@ Built with **NestJS**, **TypeORM**, and **PostgreSQL**, the API is designed for 
 
 Main entities:
 
-- **Companies**
-- **Restaurants** (linked to Companies)  
-- **Restaurant Settings**  
-- **Users & Roles**  
-- **Menu & Categories**  
-- **Orders & Order Items**  
-- **Deliveries & Drivers**  
-- **Payments**  
-- **Employees, Salary Withdrawals, Employee Requests**  
-- **Reviews**
+- **Users** (`users`) – base table for all user types  
+- **Admins** (`admins`) – owner/admin of the restaurant  
+- **Chefs** (`chefs`) – kitchen staff with specialty and hire date  
+- **Drivers** (`drivers`) – delivery personnel with vehicle info  
+- **Customers** (`customers`) – customer profiles with address  
+- **Categories** (`categories`) – menu item categories  
+- **Menu** (`menu`) – items linked to categories  
+- **Inventory** (`inventory`) – tracks stock, quantities, reorder level, managed by chefs  
+- **Orders** (`orders`) – placed by customers  
+- **Order Items** (`order_items`) – items in each order  
+- **Prepared Orders** (`prepared_orders`) – tracks readiness of each order item  
+- **Deliveries** (`deliveries`) – tracks assigned driver and delivery status  
+- **Reviews** (`reviews`) – customer feedback per order  
 
 👉 See [`schema.dbml`](./schema.dbml) for full diagram.
 
@@ -102,16 +110,17 @@ npm run start:dev
 
 ## 📌 Example Endpoints
 
-| Method | Endpoint                     | Description               |
-| ------ | ---------------------------- | ------------------------- |
-| POST   | `/auth/register`             | Register a new user       |
-| POST   | `/auth/login`                | Login and get a token     |
-| GET    | `/restaurants`               | List all restaurants      |
-| GET    | `/restaurants/:id/menu`      | Get menu for a restaurant |
-| POST   | `/orders`                    | Place an order            |
-| GET    | `/orders/:id`                | Get order details         |
-| POST   | `/employees/:id/withdrawals` | Request salary withdrawal |
-| GET    | `/reviews/:restaurantId`     | Get restaurant reviews    |
+| Method | Endpoint                     | Description                 |
+| ------ | ---------------------------- | --------------------------- |
+| POST   | `/auth/register`             | Register a new user         |
+| POST   | `/auth/login`                | Login and get a token       |
+| GET    | `/menu`                      | List all menu items         |
+| GET    | `/categories`                | List all categories         |
+| GET    | `/orders/:id`                | Get order details           |
+| POST   | `/orders`                    | Place an order              |
+| GET    | `/prepared-orders`           | Get orders ready for pickup |
+| POST   | `/deliveries/:id/assign`     | Assign a driver            |
+| GET    | `/reviews/:userId`           | Get reviews by customer     |
 
 ---
 
