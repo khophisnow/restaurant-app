@@ -9,8 +9,8 @@ import {
 } from 'typeorm';
 import { UsersEntity } from '../../users/entities/users.entity';
 
-@Entity('drivers')
-export class DriversEntity {
+@Entity('chefs')
+export class ChefsEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -19,10 +19,7 @@ export class DriversEntity {
   user: UsersEntity;
 
   @Column()
-  vehicle_number: string;
-
-  @Column()
-  license_number: string;
+  specialty: string;
 
   @Column({ type: 'date' })
   hire_date: Date;

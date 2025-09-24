@@ -15,17 +15,15 @@ export class OrderItemsEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => OrdersEntity, (order) => order.id, {
-    onDelete: 'CASCADE',
-  })
+  @ManyToOne(() => OrdersEntity)
   @JoinColumn({ name: 'order_id' })
   order: OrdersEntity;
 
-  @ManyToOne(() => MenuEntity, (menu) => menu.id, { onDelete: 'CASCADE' })
+  @ManyToOne(() => MenuEntity)
   @JoinColumn({ name: 'item_id' })
   item: MenuEntity;
 
-  @Column({ type: 'int' })
+  @Column('int')
   quantity: number;
 
   @CreateDateColumn()

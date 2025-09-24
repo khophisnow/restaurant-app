@@ -4,8 +4,9 @@ import {
   Column,
   ManyToOne,
   JoinColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
-import { RestaurantsEntity } from '../../restaurants/entities/restaurants.entity';
 import { CategoriesEntity } from '../../categories/entities/categories.entity';
 
 @Entity('menu')
@@ -13,34 +14,22 @@ export class MenuEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => RestaurantsEntity, (restaurants) => restaurants.id, {
-    onDelete: 'CASCADE',
-  })
-  @JoinColumn({ name: 'restaurant_id' })
-  restaurant: RestaurantsEntity;
-
-  @Column({ type: 'varchar' })
+  @Column()
   item_name: string;
 
-  @Column({ type: 'decimal', precision: 10, scale: 2 })
+  @Column('decimal')
   price: number;
 
   @Column({ type: 'text', nullable: true })
   description: string;
 
-  @ManyToOne(() => CategoriesEntity, (category) => category.id, {
-    onDelete: 'SET NULL',
-  })
+  @ManyToOne(() => CategoriesEntity)
   @JoinColumn({ name: 'category_id' })
   category: CategoriesEntity;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @CreateDateColumn()
   created_at: Date;
 
-  @Column({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP',
-    onUpdate: 'CURRENT_TIMESTAMP',
-  })
+  @UpdateDateColumn()
   updated_at: Date;
 }

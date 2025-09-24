@@ -5,8 +5,8 @@ import {
   ManyToOne,
   JoinColumn,
   CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
-import { RestaurantsEntity } from '../../restaurants/entities/restaurants.entity';
 import { UsersEntity } from '../../users/entities/users.entity';
 import { OrdersEntity } from '../../orders/entities/orders.entity';
 
@@ -15,26 +15,23 @@ export class ReviewsEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => RestaurantsEntity, (restaurant) => restaurant.id, {
-    onDelete: 'CASCADE',
-  })
-  @JoinColumn({ name: 'restaurant_id' })
-  restaurant: RestaurantsEntity;
-
-  @ManyToOne(() => UsersEntity, (user) => user.id, { onDelete: 'CASCADE' })
+  @ManyToOne(() => UsersEntity)
   @JoinColumn({ name: 'user_id' })
-  user: UsersEntity;
+  user: UsersEntity; // customer
 
-  @ManyToOne(() => OrdersEntity, (order) => order.id, { onDelete: 'CASCADE' })
+  @ManyToOne(() => OrdersEntity)
   @JoinColumn({ name: 'order_id' })
   order: OrdersEntity;
 
-  @Column({ type: 'int' })
+  @Column('int')
   rating: number; // 1–5
 
-  @Column({ type: 'text', nullable: true })
+  @Column('text', { nullable: true })
   comment: string;
 
   @CreateDateColumn()
   created_at: Date;
+
+  @UpdateDateColumn()
+  updated_at: Date;
 }

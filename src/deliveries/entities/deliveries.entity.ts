@@ -4,38 +4,40 @@ import {
   Column,
   ManyToOne,
   JoinColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
-import { RestaurantsEntity } from '../../restaurants/entities/restaurants.entity';
 import { OrdersEntity } from '../../orders/entities/orders.entity';
-import { DriversEntity } from '../../drivers/entities/drivers.entity';
+import { UsersEntity } from '../../users/entities/users.entity';
 
 @Entity('deliveries')
 export class DeliveriesEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => RestaurantsEntity, (restaurant) => restaurant.id, {
-    onDelete: 'CASCADE',
-  })
-  @JoinColumn({ name: 'restaurant_id' })
-  restaurant: RestaurantsEntity;
-
-  @ManyToOne(() => OrdersEntity, (order) => order.id, { onDelete: 'CASCADE' })
+  @ManyToOne(() => OrdersEntity)
   @JoinColumn({ name: 'order_id' })
   order: OrdersEntity;
 
-  @ManyToOne(() => DriversEntity, (driver) => driver.id, {
-    onDelete: 'CASCADE',
-  })
+  @ManyToOne(() => UsersEntity)
   @JoinColumn({ name: 'driver_id' })
-  driver: DriversEntity;
+  driver: UsersEntity;
 
-  @Column({ type: 'decimal', precision: 10, scale: 2 })
+  @Column('decimal')
   delivery_fee: number;
 
-  @Column({ type: 'varchar' })
-  status: string; // 'assigned', 'in_progress', 'delivered'
+  @Column()
+  status: 'assigned' | 'in_progress' | 'delivered';
+
+  @Column({ type: 'timestamp', nullable: true })
+  picked_up_at: Date;
 
   @Column({ type: 'timestamp', nullable: true })
   delivered_at: Date;
+
+  @CreateDateColumn()
+  created_at: Date;
+
+  @UpdateDateColumn()
+  updated_at: Date;
 }

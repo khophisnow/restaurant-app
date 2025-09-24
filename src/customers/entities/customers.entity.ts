@@ -9,8 +9,8 @@ import {
 } from 'typeorm';
 import { UsersEntity } from '../../users/entities/users.entity';
 
-@Entity('drivers')
-export class DriversEntity {
+@Entity('customers')
+export class CustomersEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -18,14 +18,8 @@ export class DriversEntity {
   @JoinColumn({ name: 'user_id' })
   user: UsersEntity;
 
-  @Column()
-  vehicle_number: string;
-
-  @Column()
-  license_number: string;
-
-  @Column({ type: 'date' })
-  hire_date: Date;
+  @Column('text')
+  address: string;
 
   @CreateDateColumn()
   created_at: Date;

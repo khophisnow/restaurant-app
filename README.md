@@ -132,4 +132,5 @@ npm run test
 ---
 
 ## 📜 License
+
 MIT License © 2025 [Your Name]

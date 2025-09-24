@@ -2,30 +2,33 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
+  ManyToOne,
+  JoinColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToOne,
-  JoinColumn,
 } from 'typeorm';
 import { UsersEntity } from '../../users/entities/users.entity';
 
-@Entity('drivers')
-export class DriversEntity {
+@Entity('inventory')
+export class InventoryEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToOne(() => UsersEntity)
-  @JoinColumn({ name: 'user_id' })
-  user: UsersEntity;
+  @Column()
+  item_name: string;
+
+  @Column('int')
+  quantity: number;
 
   @Column()
-  vehicle_number: string;
+  unit: string;
 
-  @Column()
-  license_number: string;
+  @Column('int')
+  reorder_level: number;
 
-  @Column({ type: 'date' })
-  hire_date: Date;
+  @ManyToOne(() => UsersEntity)
+  @JoinColumn({ name: 'managed_by' })
+  managed_by: UsersEntity; // chef who updates it
 
   @CreateDateColumn()
   created_at: Date;

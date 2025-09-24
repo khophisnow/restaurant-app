@@ -7,7 +7,6 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { RestaurantsEntity } from '../../restaurants/entities/restaurants.entity';
 import { UsersEntity } from '../../users/entities/users.entity';
 
 @Entity('orders')
@@ -15,36 +14,33 @@ export class OrdersEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => RestaurantsEntity, (restaurant) => restaurant.id, {
-    onDelete: 'CASCADE',
-  })
-  @JoinColumn({ name: 'restaurant_id' })
-  restaurant: RestaurantsEntity;
-
-  @Column({ type: 'int' })
+  @Column()
   order_number: number;
 
-  @ManyToOne(() => UsersEntity, (user) => user.id, { onDelete: 'SET NULL' })
+  @ManyToOne(() => UsersEntity)
   @JoinColumn({ name: 'user_id' })
-  user: UsersEntity;
+  user: UsersEntity; // customer
 
-  @Column({ type: 'decimal', precision: 10, scale: 2 })
-  price: number;
+  @Column('decimal')
+  total_price: number;
 
-  @Column({ type: 'varchar' })
+  @Column()
   payment_method: string;
 
-  @Column({ type: 'varchar' })
-  order_type: string; // pickup or delivery
+  @Column()
+  order_type: 'pickup' | 'delivery';
 
-  @Column({ type: 'text', nullable: true })
+  @Column('text', { nullable: true })
   delivery_location: string;
 
-  @Column({
-    type: 'varchar',
-    default: 'pending',
-  })
-  status: string;
+  @Column()
+  status:
+    | 'pending'
+    | 'confirmed'
+    | 'preparing'
+    | 'out_for_delivery'
+    | 'completed'
+    | 'cancelled';
 
   @CreateDateColumn()
   created_at: Date;
