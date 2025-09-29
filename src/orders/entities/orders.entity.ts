@@ -8,6 +8,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { UsersEntity } from '../../users/entities/users.entity';
+import { OrderStatuses } from '../enums/order-statuses';
 
 @Entity('orders')
 export class OrdersEntity {
@@ -34,13 +35,7 @@ export class OrdersEntity {
   delivery_location: string;
 
   @Column()
-  status:
-    | 'pending'
-    | 'confirmed'
-    | 'preparing'
-    | 'out_for_delivery'
-    | 'completed'
-    | 'cancelled';
+  status: OrderStatuses;
 
   @CreateDateColumn()
   created_at: Date;

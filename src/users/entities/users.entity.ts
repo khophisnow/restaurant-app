@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { UserType } from '../enums/users-type';
 
 @Entity('users')
 export class UsersEntity {
@@ -27,7 +28,7 @@ export class UsersEntity {
   hashed_password: string;
 
   @Column({ type: 'text' })
-  user_type: 'admin' | 'chef' | 'driver' | 'customer';
+  user_type: UserType;
 
   @CreateDateColumn()
   created_at: Date;
