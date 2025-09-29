@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import { OrderItemsEntity } from '../../order_items/entities/order_items.entity';
 import { UsersEntity } from '../../users/entities/users.entity';
-import { PreparedOrdersStatuses } from '../enums/prepared-order-status';
+import { PreparedOrdersStatuses } from '../enums/prepared-order-status.enum';
 
 @Entity('prepared_orders')
 export class PreparedOrdersEntity {
@@ -20,7 +20,10 @@ export class PreparedOrdersEntity {
   @JoinColumn({ name: 'order_item_id' })
   order_item: OrderItemsEntity;
 
-  @Column()
+  @Column({
+    type: 'enum',
+    enum: PreparedOrdersStatuses,
+  })
   status: PreparedOrdersStatuses;
 
   @ManyToOne(() => UsersEntity)

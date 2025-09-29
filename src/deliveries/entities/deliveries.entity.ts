@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import { OrdersEntity } from '../../orders/entities/orders.entity';
 import { UsersEntity } from '../../users/entities/users.entity';
-import { DeliveryStatuses } from '../enums/delivery-statuses';
+import { DeliveryStatuses } from '../enums/delivery-statuses.enum';
 
 @Entity('deliveries')
 export class DeliveriesEntity {
@@ -27,7 +27,10 @@ export class DeliveriesEntity {
   @Column('decimal')
   delivery_fee: number;
 
-  @Column()
+  @Column({
+    type: 'enum',
+    enum: DeliveryStatuses,
+  })
   status: DeliveryStatuses;
 
   @Column({ type: 'timestamp', nullable: true })
