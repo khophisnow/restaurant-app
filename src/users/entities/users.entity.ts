@@ -6,6 +6,8 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
+import { UserType } from '../enums/users-type.enum';
+
 @Entity('users')
 export class UsersEntity {
   @PrimaryGeneratedColumn()
@@ -26,8 +28,11 @@ export class UsersEntity {
   @Column()
   hashed_password: string;
 
-  @Column({ type: 'text' })
-  user_type: 'admin' | 'chef' | 'driver' | 'customer';
+  @Column({
+    type: 'enum',
+    enum: UserType,
+  })
+  user_type: UserType;
 
   @CreateDateColumn()
   created_at: Date;

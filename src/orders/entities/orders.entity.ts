@@ -8,6 +8,8 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { UsersEntity } from '../../users/entities/users.entity';
+import { OrderStatuses } from '../enums/order-statuses.enum';
+import { OrderType } from '../enums/order-type.enum';
 
 @Entity('orders')
 export class OrdersEntity {
@@ -27,20 +29,20 @@ export class OrdersEntity {
   @Column()
   payment_method: string;
 
-  @Column()
-  order_type: 'pickup' | 'delivery';
+  @Column({
+    type: 'enum',
+    enum: OrderType,
+  })
+  order_type: OrderType;
 
   @Column('text', { nullable: true })
   delivery_location: string;
 
-  @Column()
-  status:
-    | 'pending'
-    | 'confirmed'
-    | 'preparing'
-    | 'out_for_delivery'
-    | 'completed'
-    | 'cancelled';
+  @Column({
+    type: 'enum',
+    enum: OrderStatuses,
+  })
+  status: OrderStatuses;
 
   @CreateDateColumn()
   created_at: Date;
