@@ -24,7 +24,7 @@ export class PreparedOrdersEntity {
 
   @ManyToOne(() => UsersEntity)
   @JoinColumn({ name: 'prepared_by' })
-  prepared_by: UsersEntity; // chef
+  prepared_by: UsersEntity;
 
   @Column({ type: 'timestamp', nullable: true })
   prepared_at: Date;
