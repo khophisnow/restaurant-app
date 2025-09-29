@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 import { OrdersEntity } from '../../orders/entities/orders.entity';
 import { UsersEntity } from '../../users/entities/users.entity';
+import { DeliveryStatuses } from '../enums/delivery-statuses';
 
 @Entity('deliveries')
 export class DeliveriesEntity {
@@ -27,7 +28,7 @@ export class DeliveriesEntity {
   delivery_fee: number;
 
   @Column()
-  status: 'assigned' | 'in_progress' | 'delivered';
+  status: DeliveryStatuses;
 
   @Column({ type: 'timestamp', nullable: true })
   picked_up_at: Date;
